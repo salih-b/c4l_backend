@@ -53,69 +53,6 @@ router.post("/addResponse", (req, res) => {
 // get all families
 // get all familiy members
 // get survey for annual family 
-router.get("/",(req,res) => {
-    weed.weedFind().then(weed => {
-        res.status(200).json(weed)
-      }).catch(err => {
-        res.status(500).json(err.message)
-    })
-});
-// GET THE DATA SET FOR DATA SCIENCE
-router.get("/data",(req,res) => {
-    weed.findMyWeed().then(weed => {
-        res.status(200).json(weed)
-      }).catch(err => {
-          res.status(500).json(err.message)
-      })
-});
 
-// GET STRAIN BY ID
-router.get("/:id",(req,res) => {
-    const {id} =req.params;
-    weed.weedFindById(id).then(weed => {
-        res.status(200).json(weed)
-      }).catch(err => {
-        res.status(500).json(err.message)
-    })
-});
-
-
-
-// GET SPECIFIC INFO
-
-// router.get("/weed",(req,res) => {
-//     weed.findBy(req.body).then(weed => {
-//         res.status(200).json(weed)
-//       })
-// })
-
-router.use(authenticator);
-
-router.post("/high", async (req, res) => {
-    try{
-        const weedData = [];
-    const search = req.body.search.join('%20');
-    const results = await axios.get(`https://cannapi.herokuapp.com/predict?family_input=${search}`)
-    
-    await results.data[0].map(async strain => {
-        try{
-       const strainInfo = await weed.weedFindBy(strain)
-            weedData.push(strainInfo)
-  
-            return weedData
-        } 
-        catch(err){
-            res.status(500).json(err)
-        } 
-        return weedData
-    })
-        setTimeout(()=>{
-            res.status(200).json(weedData)
-        },5000)
-    }
-    catch(err){
-        res.status(500).json(err)
-    }
-});
 
 module.exports = router;
