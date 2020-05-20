@@ -15,7 +15,7 @@ and add functionality for whichever one, download dependencies and all...
 * Finally edit helpers file in data and then delete this file :)
 
 Tasks:
-[] create migrations and run them
+[x] create migrations and run them
 [] create any seed files you need 
 [] choose auth setting and configure folder/ files for whichever one you choose
 [] edit helper file to use specified db data
